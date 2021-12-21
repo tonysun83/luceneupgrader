@@ -60,6 +60,7 @@ public enum LuceneVersion {
     VERSION_7 {
         @Override
         protected VersionUpgrader createUpgrader(@Nonnull Path directory, @Nonnull InfoStream infoStream) {
+            System.out.println("Version 7");
             return new VersionUpgrader7(directory, infoStream);
         }
     },
@@ -67,6 +68,7 @@ public enum LuceneVersion {
     VERSION_8 {
         @Override
         protected VersionUpgrader createUpgrader(@Nonnull Path directory, @Nonnull InfoStream infoStream) {
+            System.out.println("Version 8");
             return new VersionUpgrader8(directory, infoStream);
         }
     };

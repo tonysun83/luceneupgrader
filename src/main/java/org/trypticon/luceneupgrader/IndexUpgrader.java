@@ -3,6 +3,7 @@ package org.trypticon.luceneupgrader;
 import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Upgrades an index to a newer version.
@@ -36,6 +37,8 @@ public class IndexUpgrader {
      * @throws IOException if an error occurs reading or writing.
      */
     public void upgradeTo(LuceneVersion destinationVersion) throws IOException {
+        System.out.print("Version Old" + version);
+        System.out.print("Version Destination" + destinationVersion);
         while (version.isOlderThan(destinationVersion)) {
             upgradeOneStepTo(versionAfter(version));
         }
@@ -57,5 +60,13 @@ public class IndexUpgrader {
     private static LuceneVersion versionAfter(LuceneVersion version) {
         // we know this only gets called when we have checked that version is older.
         return LuceneVersion.values()[version.ordinal() + 1];
+    }
+
+   /** Main method to run {code IndexUpgrader} from the
+   *  command-line. */
+    @SuppressWarnings("deprecation")
+    public static void main(String[] args) throws IOException {
+        Path textIndexPath =Paths.get(args[0]);
+        new IndexUpgrader(textIndexPath).upgradeTo(LuceneVersion.VERSION_8);
     }
 }
